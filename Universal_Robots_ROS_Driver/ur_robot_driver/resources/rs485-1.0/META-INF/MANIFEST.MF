@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1560760425848
+Build-Jdk: 1.8.0_212
+Built-By: ur
+Bundle-Activator: com.fzi.rs485.impl.Activator
+Bundle-Category: URCap
+Bundle-ContactAddress: Haid-und-Neu-Straße 10-14, 76131 Karlsruhe
+Bundle-Copyright: Copyright (C) 2019 FZI Research Center for Information
+  Technology
+Bundle-Description: URCap for RS485 Interface
+Bundle-LicenseType: Apache License, Version 2.0
+Bundle-ManifestVersion: 2
+Bundle-Name: rs485
+Bundle-SymbolicName: com.fzi.rs485
+Bundle-Vendor: FZI Research Center for Information Technology
+Bundle-Version: 1.0.0
+Created-By: Apache Maven Bundle Plugin
+Import-Package: com.ur.urcap.api.contribution;version="[1.0.0,2.0.0)",co
+ m.ur.urcap.api.domain;version="[1.0.0,2.0.0)",com.ur.urcap.api.domain.d
+ ata;version="[1.0.0,2.0.0)",com.ur.urcap.api.domain.script;version="[1.
+ 0.0,2.0.0)",com.ur.urcap.api.ui.annotation;version="[1.0.0,2.0.0)",com.
+ ur.urcap.api.ui.component;version="[1.0.0,2.0.0)",org.apache.xmlrpc;ver
+ sion="[3.1,4)",org.apache.xmlrpc.client;version="[3.1,4)",org.osgi.fram
+ ework;version="[1.6,2)"
+Tool: Bnd-2.1.0.20130426-122213
