@@ -22,7 +22,7 @@ rosrun pycontrol ros_cart
 $ mkdir -p robot_ws/src && cd robot_ws
 
 # clone the project
-$ git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver
+$ git clone https://github.com/WanqingXia/HRC_robot.git
 
 # install dependencies
 $ sudo apt update -qq
