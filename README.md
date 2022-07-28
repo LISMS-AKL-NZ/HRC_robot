@@ -2,6 +2,7 @@
 
 
 ## run following commands in sequence
+```bash
 catkin_make
 
 roslaunch ur_robot_driver ur5e_bringup.launch
@@ -13,6 +14,7 @@ roslaunch robotiq_85_bringup robotiq_85.launch
 rosrun robotiq_ft_sensor rq_sensor
 
 rosrun pycontrol ros_cart
+```
 
 
 ## building
