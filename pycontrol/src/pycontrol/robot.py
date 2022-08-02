@@ -74,7 +74,9 @@ class UR5eRobot:
         self._switch_controller(self.cartesian_trajectory_controller)
 
         rospy.Subscriber("/forward_cartesian_traj_controller/follow_cartesian_trajectory/feedback", FollowCartesianTrajectoryActionFeedback, self._update_robot_pose, queue_size=10)
-        self._pose = geometry_msgs.Pose()
+        self._actual_pose = geometry_msgs.Pose()
+        self._desired_pose = geometry_msgs.Pose()
+        self._position_error = [0, 0, 0]
 
         self.home_pos = [[0.297, -0.132, 0.148, 2.226, -2.217, 0.0]]
         self.go_home()
@@ -83,10 +85,20 @@ class UR5eRobot:
         self.execute_cartesian_trajectory(self.home_pos)
 
     def _update_robot_pose(self,data):
-        self._pose = data.feedback.actual.pose
+        self._actual_pose = data.feedback.actual.pose
+        self._desired_pose = data.feedback.desired.pose
+        self._position_error[0] = self._actual_pose.position.x - self._desired_pose.position.x
+        self._position_error[1] = self._actual_pose.position.y - self._desired_pose.position.y
+        self._position_error[2] = self._actual_pose.position.z - self._desired_pose.position.z
 
-    def get_pose(self):
-        return self._pose
+    def get_actual_pose(self):
+        return self._actual_pose
+
+    def get_desired_pose(self):
+        return self._desired_pose
+
+    def get_error(self):
+        return self._position_error
 
     def execute_cartesian_trajectory(self, pose_list):
         """Creates a Cartesian trajectory and sends it using the selected action server"""
