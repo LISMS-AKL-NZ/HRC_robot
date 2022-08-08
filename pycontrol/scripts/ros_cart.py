@@ -23,7 +23,7 @@ if __name__ == "__main__":
     robot = UR5eRobot()
     gripper = Robotiq85Gripper()
     sensor = FT300Sensor()
-    conveyor = ConveyorBelt()
+    # conveyor = ConveyorBelt()
 
     if gripper.get_stat().position < 0.075:
         success = gripper.open()
@@ -33,6 +33,18 @@ if __name__ == "__main__":
         else:
             rospy.loginfo('Open gripper failed')
             raise Exception("Cannot open gripper")
+
+    # conveyor.go_home()
+    while True:
+        test_list =[]
+        test_list.append([-0.132, -0.297, 0.272, 0.0, -3.141, 0.0])
+        test_list.append([-0.132, -0.803, 0.478, 0.0, -3.141, 0.0])
+        test_list.append([-0.132, -0.803, 0.195, 0.0, -3.141, 0.0])
+        test_list.append([-0.132, -0.803, 0.35, 0.0, -3.141, 0.0])
+        robot.execute_cartesian_trajectory(test_list)
+        time.sleep(1)
+
+
 
 
     pose_list = [] # move to over observing plate

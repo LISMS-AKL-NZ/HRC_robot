@@ -11,7 +11,7 @@ import sys
 import rospy
 import time
 
-from vention_converyor_msgs.msg import ConveyorCmd, ConveyorStat
+from vention_conveyor_msgs.msg import ConveyorCmd, ConveyorStat
 
 class ConveyorBelt:
     

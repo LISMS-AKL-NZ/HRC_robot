@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="ur5e_rail" >
+
+  <!-- vention_frame -->
+  <xacro:include filename="$(find vention_conveyor_description)/urdf/workbench.urdf.xacro" />
+
+  <!--Base frame for reference-->
+  <link name="world" />
+
+  <xacro:workbench parent="world" prefix="">
+		<origin xyz="0 0 0" rpy="0 0 0"/> 
+	</xacro:workbench>
+</robot>

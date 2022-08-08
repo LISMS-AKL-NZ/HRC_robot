@@ -28,7 +28,7 @@
   <exec_depend>controller_manager_msgs</exec_depend>
   <exec_depend>cartesian_control_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
-  <exec_depend>vention_track</exec_depend>
+  <exec_depend>vention_conveyor_msgs</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
