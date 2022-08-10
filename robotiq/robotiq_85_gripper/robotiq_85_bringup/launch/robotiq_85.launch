@@ -15,12 +15,12 @@
     <!-- Gripper specific robot state publisher and parameters -->
     <include file="$(find robotiq_85_description)/launch/upload_robotiq_85_gripper.launch"/>
 
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+    <node name="gripper_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
         <param name="robot_description" value="robot_description"/>
         <param name="publish_frequency" type="double" value="100.0" />
     </node>
 
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <node name="gripper_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
         <rosparam param="source_list">[/gripper/joint_states]</rosparam>
     </node>
     <!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(find robotiq_85_bringup)/rviz/robotiq_85.rviz" /> -->

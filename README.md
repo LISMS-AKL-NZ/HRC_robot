@@ -26,7 +26,7 @@ rosdep update
 rosdep install --from-paths src --ignore-src -y
 
 # build the workspace
-catkin_make
+catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
 
 # activate the workspace (ie: source it)
 source devel/setup.bash

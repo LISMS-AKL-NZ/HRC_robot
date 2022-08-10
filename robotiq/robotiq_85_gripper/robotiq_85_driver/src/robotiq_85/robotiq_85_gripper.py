@@ -1,10 +1,10 @@
 import serial
-from gripper_io import GripperIO
-from modbus_crc import verify_modbus_rtu_crc
+from robotiq_85.gripper_io import GripperIO
+from robotiq_85.modbus_crc import verify_modbus_rtu_crc
 import array
 
 class Robotiq85Gripper:
-    def __init__(self,num_grippers=1,comport='/dev/ttyUSB0',baud=115200):
+    def __init__(self,num_grippers=1,comport='/dev/ttyUR',baud=115200):
         
         try:
             self.ser = serial.Serial(comport,baud,timeout = 0.2)
