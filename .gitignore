@@ -45,6 +45,7 @@ qtcreator-*
 *__pycache__
 # Emacs
 .#*
-
+.idea
+data
 # Catkin custom files
 CATKIN_IGNORE

@@ -34,7 +34,6 @@ source devel/setup.bash
 
 ## run following commands in sequence
 ```bash
-catkin_make
 
 roslaunch ur_robot_driver ur5e_bringup.launch
 

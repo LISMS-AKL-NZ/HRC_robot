@@ -1,1 +1,5 @@
 if the sensor cannot connect, try to change the permission of /dev/ttyUSB0 with sudo chmod 777 /dev/ttyUSB0
+
+sudo chmod 777 /tmp/ttyUR
+sudo chown $USER /tmp/ttyUR
+sudo adduser $USER dialout
