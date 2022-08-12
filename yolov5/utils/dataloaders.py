@@ -264,6 +264,41 @@ class LoadImages:
     def __len__(self):
         return self.nf  # number of files
 
+class LoadFeed:  # for inference
+    # YOLOv5 local webcam dataloader, i.e. `python detect.py --source 0`
+    def __init__(self, cap, img_size=640, stride=32):
+        self.img_size = img_size
+        self.stride = stride
+        self.cap = cap  # feed in cv2 image in BGR
+
+    def __iter__(self):
+        self.count = -1
+        return self
+
+    def __next__(self):
+        self.count += 1
+        if cv2.waitKey(1) == ord('q'):  # q to quit
+            cv2.destroyAllWindows()
+            raise StopIteration
+
+        # Read frame
+        img0 = cv2.flip(self.cap, 1)  # flip left-right
+
+        # Print
+        img_path = 'webcam.jpg'
+        s = f'webcam {self.count}: '
+
+        # Padded resize
+        img = letterbox(img0, self.img_size, stride=self.stride)[0]
+
+        # Convert
+        img = img.transpose((2, 0, 1))  # HWC to CHW, BGR to RGB
+        img = np.ascontiguousarray(img)
+
+        return img_path, img, img0, None, s
+
+    def __len__(self):
+        return 0
 
 class LoadWebcam:  # for inference
     # YOLOv5 local webcam dataloader, i.e. `python detect.py --source 0`
