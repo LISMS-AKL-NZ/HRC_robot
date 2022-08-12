@@ -133,7 +133,7 @@ if __name__ == "__main__":
     # TODO: add machine vision code
 
     pick_list = []
-    pick_list.append([0.586, -0.132, 0.095, 2.227, -2.217, 0.0])
+    pick_list.append([0.586, -0.132, 0.095, 2.217, -2.217, 0.0])
     robot.execute_cartesian_trajectory(pick_list)
 
     if gripper.get_stat().position > 0.05:
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     conveyor.set_position(540)
 
     place_list= []
-    place_list.append([0.297, -0.132, 0.272, 2.226, -2.217, 0.0])
+    place_list.append([0.297, -0.132, 0.272, 2.217, -2.217, 0.0])
     place_list.append([0.175, 0.273, 0.272, 3.14, -0.231, 0.0])
     robot.execute_cartesian_trajectory(place_list)
 

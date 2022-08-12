@@ -292,7 +292,7 @@ class LoadFeed:  # for inference
         img = letterbox(img0, self.img_size, stride=self.stride)[0]
 
         # Convert
-        img = img.transpose((2, 0, 1))  # HWC to CHW, BGR to RGB
+        img = img.transpose((2, 0, 1))  # HWC to CHW
         img = np.ascontiguousarray(img)
 
         return img_path, img, img0, None, s

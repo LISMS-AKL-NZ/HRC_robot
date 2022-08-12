@@ -85,8 +85,9 @@ def run(
                     cv2.resizeWindow('Azure Kinect', im0.shape[1], im0.shape[0])
                 cv2.imshow('Azure Kinect', im0)
                 cv2.waitKey(1)  # 1 millisecond
-                return
+
+                return det
 
 
 if __name__ == "__main__":
-    run()
+    print('This script cannot be ran, try to call the function from another script')
