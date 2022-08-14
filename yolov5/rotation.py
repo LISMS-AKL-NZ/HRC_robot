@@ -35,21 +35,19 @@ def rot(img):
     # get angle from rotated rectangle
     angle = rotrect[-1]
 
-    # from https://www.pyimagesearch.com/2017/02/20/text-skew-correction-opencv-python/
-    # the `cv2.minAreaRect` function returns values in the
-    # range [-90, 0); as the rectangle rotates clockwise the
-    # returned angle trends to 0 -- in this special case we
-    # need to add 90 degrees to the angle
-    if angle < -45:
-        angle = -(90 + angle)
 
-    # otherwise, just take the inverse of the angle to make
-    # it positive
-    else:
-        angle = -angle
+    rotrect_height = np.linalg.norm(box[0, :] - box[1, :])
+    rotrect_width = np.linalg.norm(box[1, :] - box[2, :])
+    blob_angle_deg = rotrect[-1]
+    if (rotrect_width < rotrect_height):
+        blob_angle_deg = - blob_angle_deg
+    elif 0 < blob_angle_deg and blob_angle_deg < 90:
+        blob_angle_deg = 90 - blob_angle_deg
+    elif blob_angle_deg == 0:
+        blob_angle_deg = -90
 
-    print(angle, "deg")
+    blob_angle_rad = np.radians(blob_angle_deg)
+    print(blob_angle_rad, "rad")
 
-    cv2.imshow("THRESH", thresh)
     cv2.imshow("RESULT", result)
     cv2.waitKey(1)

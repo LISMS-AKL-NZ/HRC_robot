@@ -47,5 +47,6 @@ qtcreator-*
 .#*
 .idea
 data
+yolo
 # Catkin custom files
 CATKIN_IGNORE

@@ -79,7 +79,7 @@ class UR5eRobot:
         self._position_error = [0, 0, 0]
 
         self.home_pos = [[0.297, -0.132, 0.148, 2.226, -2.217, 0.0]]
-        self.go_home()
+        # self.go_home()
         
     def go_home(self):
         self.execute_cartesian_trajectory(self.home_pos)
