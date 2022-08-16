@@ -1,0 +1,41 @@
+<launch>
+    <!-- Detection configuration -->
+    <arg name="weights"               default="$(find yolo_run)/src/best.pt"/>
+    <arg name="confidence_threshold"  default="0.65"/>
+    <arg name="iou_threshold"         default="0.45"/>
+    <arg name="maximum_detections"    default="10"/>
+    <arg name="agnostic_nms"          default="false"/>
+    <arg name="line_thickness"        default="3"/>
+    <arg name="augment"               default="false"/>
+    <arg name="visualize"             default="false"/>
+    <arg name="hide_labels"           default="false"/>
+    <arg name="hide_conf"             default="false"/>
+    
+    <!-- Visualize using OpenCV window -->
+    <arg name="view_image"            default="true"/>
+
+    <!-- ROS topics -->
+    <arg name="output_topic"            default="/yolov5"/>
+
+    <node pkg="yolo_run" name="detect" type="detect.py" output="screen">
+        <param name="weights"               value="$(arg weights)"/>
+        <param name="confidence_threshold"  value="$(arg confidence_threshold)"/>
+        <param name="iou_threshold"         value="$(arg iou_threshold)" />
+        <param name="maximum_detections"    value="$(arg maximum_detections)"/>
+        <param name="agnostic_nms"          value="$(arg agnostic_nms)" />
+        <param name="line_thickness"        value="$(arg line_thickness)"/>
+        <param name="augment"               value="$(arg augment)"/>
+        <param name="visualize"             value="$(arg visualize)"/>
+        <param name="hide_labels"           value="$(arg hide_labels)"/>
+        <param name="hide_conf"             value="$(arg hide_conf)"/>
+
+        <param name="view_image"            value="$(arg view_image)"/>
+        <!-- ROS topics -->
+        <param name="output_topic"          value="$(arg output_topic)"/>
+
+
+    </node>
+    <!-- <include file="$(find camera_launch)/launch/d435.launch"/> -->
+
+
+</launch>

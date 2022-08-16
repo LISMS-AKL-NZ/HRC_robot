@@ -1,0 +1,6 @@
+float32 packed_tx
+float32 packed_ty
+float32 packed_rot
+float32 unpacked_tx
+float32 unpacked_ty
+float32 unpacked_rot

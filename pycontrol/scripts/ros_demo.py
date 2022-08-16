@@ -13,28 +13,24 @@ import rospy
 import numpy as np
 
 from pycontrol.robot import UR5eRobot
-
+from pycontrol.camera import AzureKinectCamera
 
 if __name__ == "__main__":
     rospy.init_node("combined_control")
     robot = UR5eRobot()
+    camera = AzureKinectCamera()
 
     pose_list =[]
     pose_list.append([-0.132, -0.803, 0.478, 0.0, -3.141, 0.0])
     robot.execute_cartesian_trajectory(pose_list)
 
     # TODO: add machine vision code
-
-    picking_list = [] # go to picking position
-    picking_list.append([-0.132, -0.803, 0.235, 0.0, -3.141, 0.0])
-    picking_list.append([-0.132, -0.803, 0.235, 2.223, -2.219, 0.0])
-    picking_list.append([-0.132, -0.803, 0.195, 2.223, -2.219, 0.0])
-
-    robot.execute_cartesian_trajectory(picking_list)
-
-
-    retract_list = []
-    retract_list.append([-0.132, -0.803, 0.35, 0.0, -3.141, 0.0])
-    retract_list.append([-0.132, -0.297, 0.272, 0.0, -3.141, 0.0])
-
-    robot.execute_cartesian_trajectory(retract_list)
+    while True:
+        current_pose = robot.get_actual_pose()
+        detection = camera.get_detect()
+        follow_list = [] # go to picking position
+        if detection.unpacked_rot != -100:
+            tx = detection.unpacked_tx / 1000
+            ty = detection.unpacked_ty / 10000
+            follow_list.append([current_pose.position.x + tx, current_pose.position.y + ty, 0.478, 0.0, -3.141, 0.0])
+            robot.execute_cartesian_trajectory(follow_list)

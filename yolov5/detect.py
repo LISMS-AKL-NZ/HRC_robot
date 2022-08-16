@@ -81,8 +81,8 @@ def run(
             im0 = annotator.result()
             if view_img:
                 if platform.system() == 'Linux':
-                    cv2.namedWindow('Azure Kinect', cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
-                    cv2.resizeWindow('Azure Kinect', im0.shape[1], im0.shape[0])
+                    cv2.namedWindow('Camera view', cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
+                    cv2.resizeWindow('Camera view', im0.shape[1], im0.shape[0])
                 cv2.imshow('Azure Kinect', im0)
                 cv2.waitKey(1)  # 1 millisecond
 

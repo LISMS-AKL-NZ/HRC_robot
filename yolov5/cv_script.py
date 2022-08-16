@@ -21,6 +21,7 @@ def run_opencv():
     # Run inference
     capture = k4a.get_capture()
     img_color = capture.color[:, :, :3]
+    img_depth = capture.depth
     imgsz = img_color.shape[:2]
     imgsz = check_img_size(imgsz, s=stride)  # check image size
     model.warmup(imgsz=(1, 3, *imgsz))  # warmup
@@ -76,11 +77,20 @@ def run_opencv():
             y_center = (0.5 * (s[3] - s[1]) + s[1])
             tx = ((x_center - 640) * (780 / 1280)) - 50  # calculate x displacement for conveyor
             ty = -((y_center - 360) * (440 / 720)) - 80  # calculate y displacement for conveyor
-        s = np.asarray(s, dtype=np.int32)
-        img_color = cv2.flip(img_color, 1)
-        img_color = cv2.flip(img_color, 0)
-        cropped = img_color[s[1]:s[3], s[0]:s[2], :]
-        rot(cropped)
+        else:
+            s = []
+
+        if len(s):
+            s = np.asarray(s, dtype=np.int32)
+            img_color = cv2.flip(img_color, 1)
+            img_color = cv2.flip(img_color, 0)
+            cropped = img_color[s[1]:s[3], s[0]:s[2], :]
+            rot_rad = rot(cropped)
+            print('move X '+ str(tx) + 'mm, move Y ' + str(ty) + 'mm, rotate ' + str(rot_rad) + ' radians.\n')
+
+if __name__ == "__main__":
+    run_opencv()
+
 
 
 

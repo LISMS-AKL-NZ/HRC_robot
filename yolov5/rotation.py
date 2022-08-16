@@ -47,7 +47,8 @@ def rot(img):
         blob_angle_deg = -90
 
     blob_angle_rad = np.radians(blob_angle_deg)
-    print(blob_angle_rad, "rad")
+    # print(blob_angle_rad, "rad")
 
     cv2.imshow("RESULT", result)
     cv2.waitKey(1)
+    return blob_angle_rad
