@@ -282,7 +282,7 @@ class LoadFeed:  # for inference
             raise StopIteration
 
         # Read frame
-        img0 = cv2.flip(self.cap, 1)  # flip left-right
+        img0 = self.cap #cv2.flip(self.cap, 1)  # flip left-right
 
         # Print
         img_path = 'webcam.jpg'

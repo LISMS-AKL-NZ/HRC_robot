@@ -99,29 +99,48 @@ class Yolov5Detector:
             return det
 
 
-    def rot(self, img):
+    def rot(self, img, type):
         # convert to gray
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         blurred = cv2.GaussianBlur(gray, (9, 9), 0)
         maxArea = 0.0
 
-        # threshold the grayscale image
-        ret, thresh = cv2.threshold(blurred, 200, 255, cv2.THRESH_BINARY)
+        if type == 0: # packed
+            # threshold the grayscale image
+            ret, thresh = cv2.threshold(blurred, 150, 255, cv2.THRESH_BINARY_INV)
 
-        # find outer contour
-        cntrs = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        cntrs = cntrs[0] if len(cntrs) == 2 else cntrs[1]
+            # find outer contour
+            cntrs = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            cntrs = cntrs[0] if len(cntrs) == 2 else cntrs[1]
 
-        savedContour = -1
-        for i in range(0, len(cntrs)):
-            area = cv2.contourArea(cntrs[i])
-            if area > maxArea:
-                maxArea = area
-                savedContour = i
+            # savedContour = -1
+            # for i in range(0, len(cntrs)):
+            #     area = cv2.contourArea(cntrs[i])
+            #     if area > maxArea:
+            #         maxArea = area
+            #         savedContour = i
+        
 
-        if savedContour != -1:
+        elif type == 1: # unpacked
+            # threshold the grayscale image
+            ret, thresh = cv2.threshold(blurred, 200, 255, cv2.THRESH_BINARY)
+
+            # find outer contour
+            cntrs = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            cntrs = cntrs[0] if len(cntrs) == 2 else cntrs[1]
+
+            # savedContour = -1
+            # for i in range(0, len(cntrs)):
+            #     area = cv2.contourArea(cntrs[i])
+            #     if area > maxArea:
+            #         maxArea = area
+            #         savedContour = i
+
+        if len(cntrs):
+            join_cnts = np.concatenate(cntrs)
+            rotrect = cv2.minAreaRect(join_cnts)
             # get rotated rectangle from outer contour
-            rotrect = cv2.minAreaRect(cntrs[savedContour])
+            # rotrect = cv2.minAreaRect(cntrs[savedContour])
             box = cv2.boxPoints(rotrect)
             box = np.int0(box)
 
@@ -145,7 +164,7 @@ class Yolov5Detector:
 
             cv2.imshow("RESULT", result)
             cv2.waitKey(1)
-            return blob_angle_rad
+            return -blob_angle_rad
         else:
             return -100
 
@@ -174,22 +193,21 @@ class Yolov5Detector:
                     y_center = (0.5 * (c[3] - c[1]) + c[1])# up limit 360
 
                     current_dist = np.linalg.norm(np.array([x_center, y_center]) - np.array([640, 360]))
-                    if current_dist < dist_unpacked and y_center > 360:
+                    if current_dist < dist_unpacked:
                         dist_unpacked = current_dist
                         saved_unpacked = c
             
-            img_color = cv2.flip(self.img_color, 1)
 
             if len(saved_packed):
                 s = saved_packed
                 s = np.asarray(s, dtype=np.int32)
                 x_center = (0.5 * (s[2] - s[0]) + s[0])
                 y_center = (0.5 * (s[3] - s[1]) + s[1])
-                tx = ((y_center - 360) * (760 / 720)) + 80  # calculate x displacement for workbench
-                ty = ((x_center - 640) * (1330 / 1280)) - 50  # calculate y displacement for workbench
+                tx = -((y_center - 360) * (760 / 720)) + 80  # calculate x displacement for workbench
+                ty = -((x_center - 640) * (1330 / 1280)) - 50  # calculate y displacement for workbench
 
-                cropped = img_color[s[1]:s[3], s[0]:s[2], :]
-                rot_rad = self.rot(cropped)
+                cropped = self.img_color[s[1]:s[3], s[0]:s[2], :]
+                rot_rad = self.rot(cropped , 0)
                 self.pred.packed_tx = tx
                 self.pred.packed_ty = ty
                 self.pred.packed_rot = rot_rad
@@ -203,11 +221,11 @@ class Yolov5Detector:
                 s = np.asarray(s, dtype=np.int32)
                 x_center = (0.5 * (s[2] - s[0]) + s[0])
                 y_center = (0.5 * (s[3] - s[1]) + s[1])
-                tx = ((x_center - 640) * (780 / 1280)) - 50  # calculate x displacement for conveyor
+                tx = -((x_center - 640) * (780 / 1280)) - 50  # calculate x displacement for conveyor
                 ty = ((y_center - 360) * (440 / 720)) - 80  # calculate y displacement for conveyor
 
-                cropped = img_color[s[1]:s[3], s[0]:s[2], :]
-                rot_rad = self.rot(cropped)
+                cropped = self.img_color[s[1]:s[3], s[0]:s[2], :]
+                rot_rad = self.rot(cropped, 1)
                 self.pred.unpacked_tx = tx
                 self.pred.unpacked_ty = ty
                 self.pred.unpacked_rot = rot_rad

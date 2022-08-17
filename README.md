@@ -34,6 +34,7 @@ source devel/setup.bash
 
 ## run following commands in sequence
 ```bash
+roslaunch yolo_run yolov5.launch
 
 roslaunch ur_robot_driver ur5e_bringup.launch
 

@@ -21,16 +21,21 @@ if __name__ == "__main__":
     camera = AzureKinectCamera()
 
     pose_list =[]
-    pose_list.append([-0.132, -0.803, 0.478, 0.0, -3.141, 0.0])
+    pose_list.append([-0.136, -0.728, 0.478, 0.0, -3.141, 0.0])
     robot.execute_cartesian_trajectory(pose_list)
 
-    # TODO: add machine vision code
     while True:
         current_pose = robot.get_actual_pose()
         detection = camera.get_detect()
         follow_list = [] # go to picking position
         if detection.unpacked_rot != -100:
             tx = detection.unpacked_tx / 1000
-            ty = detection.unpacked_ty / 10000
-            follow_list.append([current_pose.position.x + tx, current_pose.position.y + ty, 0.478, 0.0, -3.141, 0.0])
-            robot.execute_cartesian_trajectory(follow_list)
+            ty = detection.unpacked_ty / 1000
+            if np.abs(tx) < 0.01 and np.abs(ty) < 0.01:
+                pass
+            else:
+                fixed_x = current_pose.position.x + tx
+                if fixed_x > 0.08:
+                    fixed_x = 0.08
+                follow_list.append([fixed_x, current_pose.position.y + ty, 0.478, 0.0, -3.141, 0.0])
+                robot.execute_cartesian_trajectory(follow_list)
