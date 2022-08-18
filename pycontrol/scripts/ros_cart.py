@@ -88,27 +88,27 @@ if __name__ == "__main__":
                 # object is too far or may collide with table
                 if diag > 0.94 or (current_pose[0]+ tx) > 0.08:
                     count = 0
-                    print("Object is beyond robot's reach")
+                    rospy.loginfo("Object is beyond robot's reach")
                 else:
                     # all check pass, plus count
                     count += 1
+                    if count == 3:
+                        rospy.loginfo("Object stable, confirming pose...")
             else:
                 count = 0
+                rospy.loginfo("Object is not stable")
         else:
             count = 0
+            rospy.loginfo("Object is not stable")
 
         time.sleep(0.5)
 
     picking_list = [] # go to picking position
     cp = robot.get_actual_pose()
-    picking_list.append([cp[0]+ last_tx, cp[1] + last_ty, 0.2, cp[3], cp[4], cp[5]])
-    robot.execute_cartesian_trajectory(picking_list)
-
-    rot_list = []
     cj = robot.get_joint_pose()
-    print(cj)
-    rot_list.append([cj[0], cj[1], cj[2], cj[3], cj[4], cj[5] + last_rot])
-    robot.execute_joint_trajectory(rot_list)
+    cj_conv = robot.joint_to_cart([cj[0], cj[1], cj[2], cj[3], cj[4], cj[5] + last_rot])
+    picking_list.append([cp[0]+ last_tx, cp[1] + last_ty, 0.2, cj_conv[3], cj_conv[4], cj_conv[5]])
+    robot.execute_cartesian_trajectory(picking_list)
 
     # picking_list = [] # go to picking position
     # cp = robot.get_actual_pose()
@@ -201,32 +201,27 @@ if __name__ == "__main__":
                 # object is too far or may collide with table
                 if diag > 0.94:
                     count = 0
-                    print("Object is beyond robot's reach")
+                    rospy.loginfo("Object is beyond robot's reach")
                 else:
                     # all check pass, plus count
                     count += 1
+                    if count == 3:
+                        rospy.loginfo("Object stable, confirming pose...")
             else:
                 count = 0
+                rospy.loginfo("Object is not stable")
         else:
             count = 0
+            rospy.loginfo("Object is not stable")
 
         time.sleep(0.5)
 
     picking_list = [] # go to picking position
     cp = robot.get_actual_pose()
-    picking_list.append([cp[0]+ last_tx, cp[1] + last_ty, 0.095, cp[3], cp[4], cp[5]])
-    robot.execute_cartesian_trajectory(picking_list)
-
-    rot_list = []
     cj = robot.get_joint_pose()
-    rot_list.append([cj[0], cj[1], cj[2], cj[3], cj[4], cj[5] + last_rot])
-    robot.execute_joint_trajectory(rot_list)
-
-    # picking_list = [] # go to picking position
-    # cp = robot.get_actual_pose()
-    # print(cp)
-    # picking_list.append([cp[0], cp[1], 0.09, cp[3], cp[4], cp[5]])
-    # robot.execute_cartesian_trajectory(picking_list)
+    cj_conv = robot.joint_to_cart([cj[0], cj[1], cj[2], cj[3], cj[4], cj[5] + last_rot])
+    picking_list.append([cp[0]+ last_tx, cp[1] + last_ty, 0.095, cj_conv[3], cj_conv[4], cj_conv[5]])
+    robot.execute_cartesian_trajectory(picking_list)
 
     # close gripper
     # if gripper.get_stat().position > 0.05:

@@ -9,7 +9,11 @@ pip install socketIO-client
 pip install pathlib
 
 pip install paho-mqtt
+
+pip install -r requirements # for yolov5
+
 ```
+follow instructions in https://github.com/cambel/ur_ikfast # for ur_kinematics
 
 ## building
 ```bash

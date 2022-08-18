@@ -27,16 +27,16 @@ def main():
     rospy.init_node("ur_tool_communication")
 
     # IP address of the robot
-    # robot_ip = rospy.get_param("~robot_ip")
-    robot_ip = "192.168.12.100"
+    robot_ip = rospy.get_param("~robot_ip")
+    # robot_ip = "192.168.12.100"
     # Port on which the remote pc (robot) publishes the interface
-    # tcp_port = str(rospy.get_param("~tcp_port", "54321"))
-    tcp_port = "54321"
+    tcp_port = str(rospy.get_param("~tcp_port", "54321"))
+    # tcp_port = "54321"
 
     # By default, socat will create a pty in /dev/pts/N with n being an increasing number.
     # Additionally, a symlink at the given location will be created. Use an absolute path here.
-    # local_device = rospy.get_param("~device_name")
-    local_device = "/tmp/ttyUR"
+    local_device = rospy.get_param("~device_name")
+    # local_device = "/tmp/ttyUR"
     rospy.loginfo("Remote device is available at '" + local_device + "'")
 
     cfg_params = ["pty"]

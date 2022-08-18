@@ -31,6 +31,7 @@ from cartesian_control_msgs.msg import (
 )
 
 from scipy.spatial.transform import Rotation
+from ur_ikfast import ur_kinematics
 
 JOINT_NAMES = [
     "shoulder_pan_joint",
@@ -93,6 +94,7 @@ class UR5eRobot:
         self._desired_pose = geometry_msgs.Pose()
         self._position_error = [0, 0, 0]
         self._joint_pose = JointTrajectoryPoint().positions
+        self.ur5e_arm = ur_kinematics.URKinematics('ur5e')
 
         self.home_pos = [[0.297, -0.132, 0.148, 2.226, -2.217, 0.0]]
         # self.go_home()
@@ -111,17 +113,11 @@ class UR5eRobot:
         self._joint_pose = data.actual.positions
 
     def get_actual_pose(self):
-        if self._current_controller != self.cartesian_trajectory_controller:
-            self._switch_controller(self.cartesian_trajectory_controller)
-        time.sleep(0.1)
         rx, ry, rz = self._quat2vec(self._actual_pose.orientation.x, self._actual_pose.orientation.y, self._actual_pose.orientation.z, self._actual_pose.orientation.w)
         pose= [self._actual_pose.position.x, self._actual_pose.position.y, self._actual_pose.position.z, rx, ry, rz]
         return pose
 
     def get_desired_pose(self):
-        if self._current_controller != self.cartesian_trajectory_controller:
-            self._switch_controller(self.cartesian_trajectory_controller)
-        time.sleep(0.1)
         rx, ry, rz = self._quat2vec(self._desired_pose.orientation.x, self._desired_pose.orientation.y, self._desired_pose.orientation.z, self._desired_pose.orientation.w)
         pose = [self._desired_pose.position.x, self._desired_pose.position.y, self._desired_pose.position.z, rx, ry, rz]
         return pose
@@ -263,5 +259,11 @@ class UR5eRobot:
         # Create a rotation object from rotation vector in radians
         rot = Rotation.from_quat([x, y, z, w])
         # Convert to quaternions and print
-        rq = rot.as_rotvec()
-        return rq[0], rq[1], rq[2]
+        rr = rot.as_rotvec()
+        return rr[0], rr[1], rr[2]
+    
+    def joint_to_cart(self, pose):
+        # convert joint pose(in radians) to cartisian point
+        pose_quat = self.ur5e_arm.forward(pose)
+        vec = self._quat2vec(pose_quat[3],pose_quat[4], pose_quat[5], pose_quat[6])
+        return [pose_quat[0], pose_quat[0], pose_quat[0], vec[0], vec[1], vec[2]]
