@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """--------------------------------------------------------------------
 COPYRIGHT 2015 Stanley Innovation Inc.
 
@@ -56,7 +58,7 @@ import rospy
 class Robotiq85Driver:
     def __init__(self):
         self._num_grippers = rospy.get_param('~num_grippers',1)
-        self._comport = rospy.get_param('~comport','/tmp/ttyUR')
+        self._comport = rospy.get_param('~comport','/dev/ttyUSB0')
         self._baud = rospy.get_param('~baud','115200')
 
         self._gripper = Robotiq85Gripper(self._num_grippers,self._comport,self._baud)

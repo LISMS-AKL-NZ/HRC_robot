@@ -23,11 +23,11 @@
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
         <rosparam param="source_list">[/gripper/joint_states]</rosparam>
     </node>
-    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robotiq_85_bringup)/rviz/robotiq_85.rviz" />-->
+    <!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(find robotiq_85_bringup)/rviz/robotiq_85.rviz" /> -->
 
     <!-- Robotiq 85 ROS Test -->
-    <node pkg="robotiq_85_driver" type="robotiq_85_test" name="robotiq_85_test" output="screen" if="$(arg run_test)">
+    <!--<node pkg="robotiq_85_driver" type="robotiq_85_test" name="robotiq_85_test" output="screen" if="$(arg run_test)">
         <param name="num_grippers" value="1"/>
-    </node>
+    </node>-->
 
 </launch>

@@ -4,7 +4,7 @@ from robotiq_85.modbus_crc import verify_modbus_rtu_crc
 import array
 
 class Robotiq85Gripper:
-    def __init__(self,num_grippers=1,comport='/tmp/ttyUR',baud=115200):
+    def __init__(self,num_grippers=1,comport='/dev/ttyUSB0',baud=115200):
         
         try:
             self.ser = serial.Serial(comport,baud,timeout = 0.2)
@@ -41,6 +41,7 @@ class Robotiq85Gripper:
             self.ser.write(self._gripper[dev].stat_cmd_bytes)
             rsp = self.ser.read(21)
             rsp = [ord(x) for x in rsp]
+            print(rsp)
             if (len(rsp) != 21):
                 return False
             return self._gripper[dev].parse_rsp(rsp)

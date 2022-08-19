@@ -14,7 +14,7 @@ import logging
 
 title = ""
 
-# server:                ./socat tcp-l:54321,reuseaddr,fork file:/dev/ttyTool,nonblock,raw,waitlock=/var/run/tty
+# server:                ./socat tcp-l:54321,reuseaddr,fork file:/tmp/ttyUR,nonblock,raw,waitlock=/var/run/tty
 
 
 
@@ -22,7 +22,7 @@ def start_server():
 
 	cmd = 'echo "before" > log.txt' 
 	os.system(cmd) 
-	cmd = './socat tcp-l:54321,reuseaddr,fork file:/dev/ttyTool,nonblock,raw,waitlock=/var/run/tty' 
+	cmd = './socat tcp-l:54321,reuseaddr,fork file:/tmp/ttyUR,nonblock,raw,waitlock=/var/run/tty' 
 	os.system(cmd) 
 	#result = subprocess.check_output(cmd) 
 	# result = "result"
