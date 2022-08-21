@@ -107,7 +107,7 @@ class Yolov5Detector:
 
         if type == 0: # packed
             # threshold the grayscale image
-            ret, thresh = cv2.threshold(blurred, 150, 255, cv2.THRESH_BINARY_INV)
+            ret, thresh = cv2.threshold(blurred, 130, 255, cv2.THRESH_BINARY_INV)
 
             # find outer contour
             cntrs = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -162,8 +162,8 @@ class Yolov5Detector:
             blob_angle_rad = np.radians(blob_angle_deg)
             # print(blob_angle_rad, "rad")
 
-            cv2.imshow("RESULT", result)
-            cv2.waitKey(1)
+            # cv2.imshow("RESULT", result)
+            # cv2.waitKey(1)
             return -blob_angle_rad
         else:
             return -100
@@ -204,7 +204,7 @@ class Yolov5Detector:
                 x_center = (0.5 * (s[2] - s[0]) + s[0])
                 y_center = (0.5 * (s[3] - s[1]) + s[1])
                 tx = -((y_center - 360) * (760 / 720)) + 80  # calculate x displacement for workbench
-                ty = -((x_center - 640) * (1330 / 1280)) - 50  # calculate y displacement for workbench
+                ty = -((x_center - 640) * (1330 / 1280)) - 40  # calculate y displacement for workbench
 
                 cropped = self.img_color[s[1]:s[3], s[0]:s[2], :]
                 rot_rad = self.rot(cropped , 0)
@@ -221,7 +221,7 @@ class Yolov5Detector:
                 s = np.asarray(s, dtype=np.int32)
                 x_center = (0.5 * (s[2] - s[0]) + s[0])
                 y_center = (0.5 * (s[3] - s[1]) + s[1])
-                tx = -((x_center - 640) * (780 / 1280)) - 50  # calculate x displacement for conveyor
+                tx = -((x_center - 640) * (780 / 1280)) - 40  # calculate x displacement for conveyor
                 ty = ((y_center - 360) * (440 / 720)) - 80  # calculate y displacement for conveyor
 
                 cropped = self.img_color[s[1]:s[3], s[0]:s[2], :]

@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
   std_msgs
+  roslaunch
 )
 
 add_message_files(
@@ -34,6 +35,8 @@ include_directories(
   include ${catkin_INCLUDE_DIRS}
 )
 
+roslaunch_add_file_check(launch)
+
 # make the executables
 add_executable(rq_sensor nodes/rq_sensor.cpp src/rq_sensor_com.cpp src/rq_sensor_state.cpp)
 add_dependencies(rq_sensor ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -53,4 +56,8 @@ install(DIRECTORY urdf
 
 install(DIRECTORY meshes
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(DIRECTORY launch
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
