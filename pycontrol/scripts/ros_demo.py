@@ -18,29 +18,37 @@ from pycontrol.camera import AzureKinectCamera
 if __name__ == "__main__":
     rospy.init_node("combined_control")
     robot = UR5eRobot()
-    # camera = AzureKinectCamera()
+    camera = AzureKinectCamera()
+
+    pose_list =[]
+    pose_list.append([-0.136, -0.728, 0.478, 0.0, -3.141, 0.0])
+    robot.execute_cartesian_trajectory(pose_list)
+
     while True:
+<<<<<<< HEAD
         pose_list =[]
-        pose_list.append([0.586, -0.132, 0.663, 2.227, -2.217, 0.0])
+        pose_list.append([-0.067, -0.132, 0.704, 1.911, -1.889, 3.604])
         robot.execute_cartesian_trajectory(pose_list)
 
         time.sleep(1)
 
-        robot.go_home()
+        rot_list =[]
+        rot_list.append([-0.067, -0.132, 0.704, 1.572, -3.822, 2.932])
+        robot.execute_cartesian_trajectory(rot_list)
         time.sleep(1)
-
-    # while True:
-    #     current_pose = robot.get_actual_pose()
-    #     detection = camera.get_detect()
-    #     follow_list = [] # go to picking position
-    #     if detection.unpacked_rot != -100:
-    #         tx = detection.unpacked_tx / 1000
-    #         ty = detection.unpacked_ty / 1000
-    #         if np.abs(tx) < 0.01 and np.abs(ty) < 0.01:
-    #             pass
-    #         else:
-    #             fixed_x = current_pose.position.x + tx
-    #             if fixed_x > 0.08:
-    #                 fixed_x = 0.08
-    #             follow_list.append([fixed_x, current_pose.position.y + ty, 0.478, 0.0, -3.141, 0.0])
-    #             robot.execute_cartesian_trajectory(follow_list)
+=======
+        current_pose = robot.get_actual_pose()
+        detection = camera.get_detect()
+        follow_list = [] # go to picking position
+        if detection.unpacked_rot != -100:
+            tx = detection.unpacked_tx / 1000
+            ty = detection.unpacked_ty / 1000
+            if np.abs(tx) < 0.01 and np.abs(ty) < 0.01:
+                pass
+            else:
+                fixed_x = current_pose.position.x + tx
+                if fixed_x > 0.08:
+                    fixed_x = 0.08
+                follow_list.append([fixed_x, current_pose.position.y + ty, 0.478, 0.0, -3.141, 0.0])
+                robot.execute_cartesian_trajectory(follow_list)
+>>>>>>> parent of 5740212 (azure kinect ros package added)

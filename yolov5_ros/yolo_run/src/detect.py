@@ -43,7 +43,7 @@ class Yolov5Detector:
         img_color = capture.color[:, :, :3]
         self.imgsz = img_color.shape[:2]
         self.imgsz = check_img_size(self.imgsz, s=self.stride)  # check image size
-        self.model.warmup(imgsz=(1, 3, *self.imgsz))  # warmup
+        self.model.warmup(imgsz=(1, 3, self.imgsz))  # warmup
 
         self.yolo_pub = rospy.Publisher(rospy.get_param("~output_topic"), yolo, queue_size=10)
         self.r = rospy.Rate(30)

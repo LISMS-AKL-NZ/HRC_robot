@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"
+       name="rail" >
+
+  <!-- vention_frame -->
+  <xacro:include filename="$(find workbench)/urdf/workbench.urdf.xacro" />
+
+  <xacro:workbench prefix=""/>
+  
+</robot>

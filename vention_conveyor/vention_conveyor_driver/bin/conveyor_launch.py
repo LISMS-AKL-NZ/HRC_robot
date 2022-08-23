@@ -56,14 +56,14 @@ class ConveyorDriver:
         if pos_home > 1 or pos_home < 0:
             self.is_ready &= False
 
-        position_desired = 100
-        self._conveyor.moveToPosition(self._axis, position_desired)
-        rospy.loginfo("Sending conveyor belt to 100mm from home position")
-        self._conveyor.waitForMotionCompletion()
-        pos_actual = self._conveyor.getActualPositions(self._axis)
-        if pos_actual > 101 or pos_actual < 99:
-            rospy.logerr("Initialisation failed, desired position is 100.0, but actual position is " + str(pos_actual))
-            self.is_ready &= False
+        # position_desired = 100
+        # self._conveyor.moveToPosition(self._axis, position_desired)
+        # rospy.loginfo("Sending conveyor belt to 100mm from home position")
+        # self._conveyor.waitForMotionCompletion()
+        # pos_actual = self._conveyor.getActualPositions(self._axis)
+        # if pos_actual > 101 or pos_actual < 99:
+        #     rospy.logerr("Initialisation failed, desired position is 100.0, but actual position is " + str(pos_actual))
+        #     self.is_ready &= False
 
         # position_desired = 250
         # self._conveyor.moveToPosition(self._axis, position_desired)

@@ -2,15 +2,8 @@
 
 ## dependencies
 ```bash
-pip install scipy
 
-pip install socketIO-client
-
-pip install pathlib
-
-pip install paho-mqtt
-
-pip install -r requirements # for yolov5
+pip install -r requirements # for whole robot
 
 ```
 follow instructions in https://github.com/cambel/ur_ikfast # for ur_kinematics
@@ -48,5 +41,5 @@ roslaunch robotiq_ft_sensor ft_sensor.launch
 
 roslaunch vention_conveyor_bringup vention_conveyor.launch 
 
-rosrun pycontrol ros_cart.py
+rosrun pycontrol ros_demo.py
 ```
