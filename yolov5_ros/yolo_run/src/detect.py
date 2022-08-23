@@ -2,7 +2,7 @@
 
 import os
 import cv2
-from pyk4a import PyK4A
+#from pyk4a import PyK4A
 import torch
 from models.common import DetectMultiBackend
 from utils.dataloaders import LoadFeed
@@ -11,6 +11,8 @@ from utils.plots import Annotator, colors
 import numpy as np
 import rospy
 from yolo_msgs.msg import yolo
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
 
 
 @torch.no_grad()
@@ -29,8 +31,11 @@ class Yolov5Detector:
         self.hide_conf = rospy.get_param("~hide_conf")
 
         # open Azure Kinect camera
-        self.k4a = PyK4A()
-        self.k4a.start()
+        #self.k4a = PyK4A()
+        #self.k4a.start()
+        self.img_color = 0
+        self.bridge = CvBridge()
+        rospy.Subscriber("/rgb/image_raw", Image, self._update_image, queue_size=10)
         self.weights = rospy.get_param("~weights")
 
         # Load model
@@ -39,9 +44,9 @@ class Yolov5Detector:
         self.stride, self.names, self.pt = self.model.stride, self.model.names, self.model.pt
 
         # Run inference
-        capture = self.k4a.get_capture()
-        img_color = capture.color[:, :, :3]
-        self.imgsz = img_color.shape[:2]
+        # capture = self.k4a.get_capture()
+        # img_color = capture.color[:, :, :3]
+        self.imgsz = self.img_color.shape[:2]
         self.imgsz = check_img_size(self.imgsz, s=self.stride)  # check image size
         self.model.warmup(imgsz=(1, 3, *self.imgsz))  # warmup
 
@@ -50,9 +55,12 @@ class Yolov5Detector:
         self.pred = yolo()
         self._run_yolo()
 
+    def _update_image(self, img):
+        frame = self.bridge.imgmsg_to_cv2(img)
+        self.img_color = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
+
 
     def detect(self):
-
         dataset = LoadFeed(self.img_color, img_size=self.imgsz, stride=self.stride)
 
         for path, im, im0s, vid_cap, s in dataset:
@@ -170,8 +178,6 @@ class Yolov5Detector:
 
     def _run_yolo(self):
         while not rospy.is_shutdown():
-            capture = self.k4a.get_capture()
-            self.img_color = capture.color[:, :, :3] # BGRA to BGR
 
             det = self.detect()
             det = det.cpu().detach().numpy()
