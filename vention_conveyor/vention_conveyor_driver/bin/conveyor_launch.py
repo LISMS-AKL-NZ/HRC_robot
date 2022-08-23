@@ -17,12 +17,12 @@ from vention_conveyor_msgs.msg import ConveyorCmd, ConveyorStat
 class ConveyorDriver:
     
     def __init__(self):
-        self._minpos = rospy.get_param('~min_position', 0)
-        self._maxpos = rospy.get_param('~max_position', 540)
-        self._ip = rospy.get_param('~ip', "192.168.12.200")
-        self._acceleration = rospy.get_param('~init_acceleration', 50)
-        self._speed = rospy.get_param('~init_speed', 50)
+        self._minpos = 0.0
+        self._maxpos = 540.0
+        self._ip = "192.168.12.200"
         self._position = 0.0
+        self._acceleration = 50.0
+        self._speed = 50.0
         self.is_ready = True
         self._conveyor = MachineMotion(machineIp=self._ip)
 

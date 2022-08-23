@@ -266,4 +266,4 @@ class UR5eRobot:
         # convert joint pose(in radians) to cartisian point
         pose_quat = self.ur5e_arm.forward(pose)
         vec = self._quat2vec(pose_quat[3],pose_quat[4], pose_quat[5], pose_quat[6])
-        return [pose_quat[0], pose_quat[1], pose_quat[2], vec[1], -vec[0], vec[2]]
+        return [pose_quat[0], pose_quat[0], pose_quat[0], vec[0], vec[1], vec[2]]

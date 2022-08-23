@@ -37,9 +37,9 @@ roslaunch ur_robot_driver ur5e_bringup.launch
 
 roslaunch robotiq_85_bringup robotiq_85.launch
 
-roslaunch robotiq_ft_sensor ft_sensor.launch
+rosrun robotiq_ft_sensor rq_sensor
 
-roslaunch vention_conveyor_bringup vention_conveyor.launch 
+rosrun vention_conveyor_driver conveyor_launch.py
 
 rosrun pycontrol ros_demo.py
 ```
