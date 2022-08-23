@@ -1,3 +1,4 @@
+# from msilib.schema import Error
 import serial
 from robotiq_85.gripper_io import GripperIO
 from robotiq_85.modbus_crc import verify_modbus_rtu_crc
@@ -7,7 +8,7 @@ class Robotiq85Gripper:
     def __init__(self,num_grippers=1,comport='/dev/ttyUSB0',baud=115200):
         
         try:
-            self.ser = serial.Serial(comport,baud,timeout = 0.2)
+            self.ser = serial.Serial(comport,baud,timeout = 0.5)
         except:
             self.init_success = False
             return
@@ -29,24 +30,23 @@ class Robotiq85Gripper:
         try:    
             self.ser.write(self._gripper[dev].act_cmd_bytes)
             rsp = self.ser.read(8)
-            rsp = [ord(x) for x in rsp]
             if (len(rsp) != 8):
                 return False
             return verify_modbus_rtu_crc(rsp)
-        except:
-            return False
+        except BaseException as error:
+            print('An exception occurred: {}'.format(error))
         
     def process_stat_cmd(self,dev=0):
         try:
             self.ser.write(self._gripper[dev].stat_cmd_bytes)
+            # print(self._gripper[dev].stat_cmd_bytes)
             rsp = self.ser.read(21)
-            rsp = [ord(x) for x in rsp]
-            print(rsp)
+            # print(rsp)
             if (len(rsp) != 21):
                 return False
             return self._gripper[dev].parse_rsp(rsp)
-        except:
-            return False
+        except BaseException as error:
+            print('An exception occurred: {}'.format(error))
 
     def activate_gripper(self,dev=0):
         if (dev >= self._num_grippers):

@@ -31,15 +31,17 @@ source devel/setup.bash
 
 ## run following commands in sequence
 ```bash
+roslaunch azure_kinect_ros_driver driver.launch
+
 roslaunch yolo_run yolov5.launch
 
 roslaunch ur_robot_driver ur5e_bringup.launch
 
 roslaunch robotiq_85_bringup robotiq_85.launch
 
-rosrun robotiq_ft_sensor rq_sensor
+roslaunch robotiq_ft_sensor ft_sensor.launch
 
-rosrun vention_conveyor_driver conveyor_launch.py
+roslaunch vention_conveyor_bringup vention_conveyor.launch 
 
 rosrun pycontrol ros_demo.py
 ```
