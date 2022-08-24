@@ -18,7 +18,7 @@
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                filename="package://workbench/meshes/workbench_base.STL" />
+                filename="package://vention_conveyor_description/meshes/workbench_base.STL" />
                 <!-- <box size="2 2 1"/> -->
             </geometry>
             <material
@@ -33,7 +33,7 @@
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                filename="package://workbench/meshes/workbench_base.STL" />
+                filename="package://vention_conveyor_description/meshes/workbench_base.STL" />
             </geometry>
             </collision>
         </link>
@@ -51,7 +51,7 @@
             <visual>
                 <geometry>
                     <mesh
-                    filename="package://workbench/meshes/workbench_mount.STL" />
+                    filename="package://vention_conveyor_description/meshes/workbench_mount.STL" />
                 </geometry>
                 <origin
                 xyz="-.09 -.09 0"
@@ -64,7 +64,7 @@
             <collision>
                 <geometry>
                     <mesh
-                    filename="package://workbench/meshes/workbench_mount.STL" />
+                    filename="package://vention_conveyor_description/meshes/workbench_mount.STL" />
                 </geometry>
                 <origin
                 xyz="-.09 -.09 0"

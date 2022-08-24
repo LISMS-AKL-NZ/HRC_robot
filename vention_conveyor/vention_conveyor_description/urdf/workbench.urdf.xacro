@@ -11,14 +11,14 @@
         <!-- mount the workbench to the robot -->
 
         <link
-            name="${prefix}workbench_link">
+            name="${prefix}workbench_base">
             <visual>
             <origin
-                xyz="-0.25 -.943 -1.01"
+                xyz="-0.25 -.943 0"
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                filename="package://workbench/meshes/workbench_base.STL" />
+                filename="package://vention_conveyor_description/meshes/workbench_base.STL" />
                 <!-- <box size="2 2 1"/> -->
             </geometry>
             <material
@@ -29,45 +29,45 @@
             </visual>
             <collision>
             <origin
-                xyz="-0.25 -.943 -1.01"
+                xyz="-0.25 -.943 0"
                 rpy="0 0 0" />
             <geometry>
                 <mesh
-                filename="package://workbench/meshes/workbench_base.STL" />
+                filename="package://vention_conveyor_description/meshes/workbench_base.STL" />
             </geometry>
             </collision>
         </link>
 
 
-        <joint name="${prefix}axis1_joint" type="prismatic">
-            <parent link="${prefix}workbench_link"/>
-            <child link="${prefix}axis1"/>
+        <joint name="${prefix}workbench_link" type="prismatic">
+            <parent link="${prefix}workbench_base"/>
+            <child link="${prefix}workbench_mount"/>
             <!-- Here we enter the joint position just defined before -->
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 -0.36 1.01" rpy="0 0 0"/> <!-- this y doesn't match actuall length, need to change later-->
             <!-- Here we define the axis along which the geometry is moved -->
             <axis xyz="0 1 0"/>
             <!-- Here we define the joint's upper and lower limits -->
-            <limit effort="1000.0" lower="-.5" upper=".5" velocity="0.05"/>
+            <limit effort="1000.0" lower="0" upper="0.54" velocity="0.05"/>
         </joint>
 
-        <link name="${prefix}axis1">
+        <link name="${prefix}workbench_mount">
             <visual>
                 <geometry>
                     <mesh
-                    filename="package://workbench/meshes/workbench_mount.STL" />
+                    filename="package://vention_conveyor_description/meshes/workbench_mount.STL" />
                 </geometry>
                 <origin
                 xyz="-.09 -.09 0"
                 rpy="0 0 0" />
                 <material name="">
                     <color
-                    rgba="0.33725 0.52941 0.75686 1" />
+                    rgba="0.33725 0.52941 1 1" />
                 </material>
             </visual>
             <collision>
                 <geometry>
                     <mesh
-                    filename="package://workbench/meshes/workbench_mount.STL" />
+                    filename="package://vention_conveyor_description/meshes/workbench_mount.STL" />
                 </geometry>
                 <origin
                 xyz="-.09 -.09 0"

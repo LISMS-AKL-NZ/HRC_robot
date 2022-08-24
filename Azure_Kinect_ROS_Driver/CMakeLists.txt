@@ -257,6 +257,7 @@ install(TARGETS ${PROJECT_NAME}_nodelet
 install(
   DIRECTORY
   launch
+  meshes
   urdf
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
