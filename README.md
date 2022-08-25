@@ -43,5 +43,7 @@ roslaunch robotiq_ft_sensor ft_sensor.launch
 
 roslaunch vention_conveyor_bringup vention_conveyor.launch 
 
+roslaunch pycontrol ur5e_workbench.launch
+
 rosrun pycontrol ros_demo.py
 ```

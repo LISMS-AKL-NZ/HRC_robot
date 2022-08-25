@@ -39,18 +39,22 @@ if __name__ == "__main__":
     rospy.init_node("combined_control")
     robot = UR5eRobot()
     gripper = Robotiq85Gripper()
-    # camera = AzureKinectCamera()
-    while True:
-        pose_list =[]
-        pose_list.append([-0.067, -0.132, 1.08, 1.911, -1.889, 3.604])
-        robot.execute_cartesian_trajectory(pose_list)
-        open_gripper(gripper)
+    # camera = AzureKinectCamera()\
+    angle = 1.571
+    try:
+        while True:
+            pose_list =[]
+            pose_list.append([0.0, -angle, 0.0, -angle, angle, 0.0])
+            robot.execute_joint_trajectory(pose_list)
+            open_gripper(gripper)
 
-        time.sleep(1)
+            time.sleep(1)
 
-        rot_list =[]
-        rot_list.append([-0.067, -0.132, 1.08, 1.572, -3.822, 2.932])
-        robot.execute_cartesian_trajectory(rot_list)
-        close_gripper(gripper)
+            rot_list =[]
+            rot_list.append([0.0, -angle, 0.0, -angle, 0.0, 0.0])
+            robot.execute_joint_trajectory(rot_list)
+            close_gripper(gripper)
 
-        time.sleep(1)
+            time.sleep(1)
+    except KeyboardInterrupt:
+        pass

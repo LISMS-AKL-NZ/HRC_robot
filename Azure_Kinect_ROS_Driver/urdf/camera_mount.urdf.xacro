@@ -44,6 +44,9 @@
             <origin xyz="0 0 0" rpy="0. 0. 0." />
         </joint>
 
+        <link name="${prefix}tool_link"/>
+        <link name="${prefix}camera_link"/>
+
     </xacro:macro>
 
 </robot>

@@ -56,6 +56,13 @@
         <origin xyz="0.05 0.0375 0.04" rpy="${pi/2} ${pi} 0"/>
     </xacro:azure_camera_mount>
 
+    <!-- ############### CAMERA ################ -->
+    <xacro:include filename="$(find azure_kinect_ros_driver)/urdf/azure_kinect.urdf.xacro" />
+
+    <xacro:azure_kinect prefix="${prefix}" parent="${prefix}camera_link" >
+        <origin xyz="0.05 -0.04 0.106" rpy="0 0 ${-pi/2}"/>
+    </xacro:azure_kinect>
+
     <!-- ############### GRIPPER ################ -->
     
     <xacro:include filename="$(find robotiq_85_description)/urdf/robotiq_85_gripper.urdf.xacro" />
@@ -71,6 +78,9 @@
             <geometry>
                 <cylinder radius="0.04" length="0.017"/>
             </geometry>
+            <material name="black">
+                <color rgba="1 1 1 1.0"/>
+            </material>
         </visual>
         <collision>
             <geometry>
@@ -82,12 +92,5 @@
     <xacro:robotiq_85_gripper prefix="${prefix}" parent="${prefix}gripper_coupler_link" >
         <origin xyz="0 0 -0.008" rpy="0 ${pi/2} ${-pi/2}" />
     </xacro:robotiq_85_gripper>
-
-    <!-- ############### CAMERA ################ -->
-    <xacro:include filename="$(find azure_kinect_ros_driver)/urdf/azure_kinect.urdf.xacro" />
-
-    <xacro:azure_kinect prefix="${prefix}" parent="${prefix}camera_link" >
-        <origin xyz="0.05 -0.04 0.106" rpy="0 0 ${-pi/2}"/>
-    </xacro:azure_kinect>
 
 </robot>
