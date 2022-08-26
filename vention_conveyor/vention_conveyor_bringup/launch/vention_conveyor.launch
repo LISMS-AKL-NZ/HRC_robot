@@ -1,6 +1,6 @@
 <launch>
     <arg name="min_position"           default="0"/>
-    <arg name="max_position"           default="540"/>
+    <arg name="max_position"           default="710"/>
     <arg name="ip"                     default="192.168.12.200"/>
     <arg name="init_acceleration"      default="50"/>
     <arg name="init_speed"             default="50"/>

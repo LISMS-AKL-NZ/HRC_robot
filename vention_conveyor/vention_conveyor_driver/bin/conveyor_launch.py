@@ -18,7 +18,7 @@ class ConveyorDriver:
     
     def __init__(self):
         self._minpos = rospy.get_param('~min_position', 0)
-        self._maxpos = rospy.get_param('~max_position', 540)
+        self._maxpos = rospy.get_param('~max_position', 710)
         self._ip = rospy.get_param('~ip', "192.168.12.200")
         self._acceleration = rospy.get_param('~init_acceleration', 50)
         self._speed = rospy.get_param('~init_speed', 50)

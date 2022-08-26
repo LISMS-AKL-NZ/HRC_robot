@@ -30,7 +30,7 @@ catkin_package(
 )
 catkin_package()
 
-catkin_install_python(PROGRAMS scripts/ros_cart.py scripts/ros_demo.py scripts/ros_joint.py
+catkin_install_python(PROGRAMS scripts/ros_cart.py scripts/ros_demo.py scripts/ros_joint.py scripts/robot_only.py
   DESTINATION $(CATKIN_PACKAGE_BIN_DESTINATION)
 )
 

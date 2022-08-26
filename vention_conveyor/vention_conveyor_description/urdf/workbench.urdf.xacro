@@ -47,7 +47,7 @@
             <!-- Here we define the axis along which the geometry is moved -->
             <axis xyz="0 1 0"/>
             <!-- Here we define the joint's upper and lower limits -->
-            <limit effort="1000.0" lower="0" upper="0.54" velocity="0.05"/>
+            <limit effort="1000.0" lower="0" upper="0.71" velocity="0.05"/>
         </joint>
 
         <link name="${prefix}workbench_mount">
