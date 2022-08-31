@@ -1,56 +1,57 @@
 <?xml version="1.0"?>
-<robot name="ur5e_workbench" xmlns:xacro="https://ros.org/wiki/xacro">
+<robot name="workbench_assemble" xmlns:xacro="https://ros.org/wiki/xacro">
 
+    <xacro:arg name="robot" default="workbench_assemble" />      <!-- can be "mobipick-hb" or "mobipick-os" -->
+    <xacro:property name="robot" value="$(arg robot)" />  <!-- necessary because args cannot be accessed inside ${} expressions -->
     <xacro:property name="prefix" value="" />
-    
     <!-- workbench-->
-    <xacro:include filename="$(find vention_conveyor_description)/urdf/workbench.urdf.xacro" />
+    <xacro:include filename="$(find vention_conveyor_description)/urdf/workbench_table.urdf.xacro" />
 
-    <link name="${prefix}world" />
+    <link name="world" />
 
     <!--joint that connects world and workbench-->
-    <joint name="${prefix}world_joint" type="fixed">
-        <parent link="${prefix}world" />
-        <child link="${prefix}workbench_base" />
+    <joint name="world_joint" type="fixed">
+        <parent link="world" />
+        <child link="workbench_base" />
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
     </joint>
 
-    <xacro:workbench prefix="${prefix}" />
+    <xacro:workbench_table prefix="" />
 
     <!-- ur5e -->
-    <xacro:include filename="$(find ur_description)/urdf/inc/ur_macro.xacro" />
+    <xacro:include filename="$(find ur_description)/urdf/inc/ur5e_macro.xacro" />
+
     <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
     <xacro:arg name="joint_limit_params" default="$(find ur_description)/config/ur5e/joint_limits.yaml"/>
     <xacro:arg name="kinematics_params" default="$(find ur_description)/config/ur5e/default_kinematics.yaml"/>
-    <xacro:arg name="physical_params" default="$(find ur_description)/config/ur5e/physical_parameters.yaml"/>
-    <xacro:arg name="visual_params" default="$(find ur_description)/config/ur5e/visual_parameters.yaml"/>
-    <xacro:arg name="safety_limits" default="false"/>
-    <xacro:arg name="safety_pos_margin" default="0.15"/>
-    <xacro:arg name="safety_k_position" default="20"/>
 
+
+    <xacro:ur5e_robot prefix="${prefix}"
+    transmission_hw_interface="$(arg transmission_hw_interface)"
+    joint_limits_parameters_file="$(arg joint_limit_params)"
+    kinematics_parameters_file="$(arg kinematics_params)" />
+
+    
     <!--joint that connects workbench and ur5e-->
-    <joint name="${prefix}attachment_joint" type="fixed">
-        <parent link="${prefix}workbench_mount" />
+    <joint name="attachment_joint" type="fixed">
+        <parent link="workbench_mount" />
         <child link="${prefix}base_link" />
         <origin xyz="0.0 0.0 0.00" rpy="0 0.0 3.14159" />
     </joint>
 
-    <xacro:ur_robot
-        prefix="${prefix}"
-        joint_limits_parameters_file="$(arg joint_limit_params)"
-        kinematics_parameters_file="$(arg kinematics_params)"
-        physical_parameters_file="$(arg physical_params)"
-        visual_parameters_file="$(arg visual_params)"
-        transmission_hw_interface="$(arg transmission_hw_interface)"
-        safety_limits="$(arg safety_limits)"
-        safety_pos_margin="$(arg safety_pos_margin)"
-        safety_k_position="$(arg safety_k_position)"/>
+
 
     <!-- ############## FT SENSOR ############### -->
+    <!-- gripper coupling (ISO 9409-1-50-4-M / Robotiq AGC-CPL-062-002_20171219) -->
+    <xacro:property name="coupling_radius" value="0.0375" />
+    <xacro:property name="coupling_outer_length" value="0.014" />
+    <xacro:property name="coupling_inner_length" value="0.008" />
+    <xacro:property name="coupling_mass" value="0.100" />
+
     <xacro:include filename="$(find robotiq_ft_sensor)/urdf/robotiq_ft300.urdf.xacro" />
 
     <xacro:robotiq_ft300 parent="${prefix}tool0" prefix="${prefix}">
-        <origin xyz="0 0 0.004" rpy="0 0 ${-pi/2}" />
+        <origin xyz="0 0 ${-coupling_inner_length / 2}" rpy="0 0 ${-pi/2}" />
     </xacro:robotiq_ft300>
 
 

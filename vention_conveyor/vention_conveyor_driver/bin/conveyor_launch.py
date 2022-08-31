@@ -13,6 +13,7 @@ import time
 
 from vention_conveyor_driver.MachineMotion import *
 from vention_conveyor_msgs.msg import ConveyorCmd, ConveyorStat
+from sensor_msgs.msg import JointState
 
 class ConveyorDriver:
     
@@ -63,15 +64,6 @@ class ConveyorDriver:
         # pos_actual = self._conveyor.getActualPositions(self._axis)
         # if pos_actual > 101 or pos_actual < 99:
         #     rospy.logerr("Initialisation failed, desired position is 100.0, but actual position is " + str(pos_actual))
-        #     self.is_ready &= False
-
-        # position_desired = 250
-        # self._conveyor.moveToPosition(self._axis, position_desired)
-        # rospy.loginfo("Sending conveyor belt 250mm from home position")
-        # self._conveyor.waitForMotionCompletion()
-        # pos_actual = self._conveyor.getActualPositions(self._axis)
-        # if pos_actual > 251 or pos_actual < 249:
-        #     rospy.logerr("Initialisation failed, desired position is 0.0, but actual position is " + str(pos_actual))
         #     self.is_ready &= False
         
 

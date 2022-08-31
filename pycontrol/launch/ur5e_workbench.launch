@@ -1,5 +1,0 @@
-<launch>
-    <!-- Launch combined robot-->
-    <param name="robot_description" command="$(find xacro)/xacro '$(find pycontrol)/urdf/ur5e_workbench.urdf.xacro'"> </param>
-
-</launch>
