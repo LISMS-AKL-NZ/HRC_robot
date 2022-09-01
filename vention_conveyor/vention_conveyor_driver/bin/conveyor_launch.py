@@ -35,6 +35,7 @@ class ConveyorDriver:
 
         rospy.Subscriber("/conveyor/cmd", ConveyorCmd, self._update_conveyor_cmd, queue_size=10)
         self._conveyor_pub = rospy.Publisher('/conveyor/stat', ConveyorStat, queue_size=10)
+        self._conveyor_joint_pub = rospy.Publisher('joint_states', JointState, queue_size=10)
 
         self._run_driver()
 
@@ -111,6 +112,15 @@ class ConveyorDriver:
             stat = ConveyorStat()
             stat = self._update_stat()
             self._conveyor_pub.publish(stat)
+
+            state = JointState()
+            state.header.stamp = rospy.Time.now()
+            state.name = ['workbench_joint']
+            state.position = [stat.current_position/1000]
+            state.velocity = [0.0]
+            state.effort = [0.0]
+            self._conveyor_joint_pub.publish(state)
+
             r.sleep()
 
 

@@ -43,7 +43,7 @@ roslaunch robotiq_ft_sensor ft_sensor.launch
 
 roslaunch vention_conveyor_bringup vention_conveyor.launch 
 
-roslaunch workbench_bringup assembled_workbench.launch
+rviz -d  workbench/workbench_bringup/launch/combine.rviz
 
 rosrun pycontrol ros_demo.py
 ```

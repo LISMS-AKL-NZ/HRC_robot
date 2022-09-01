@@ -39,15 +39,15 @@
         </link>
 
 
-        <joint name="${prefix}workbench_joint" type="fixed">
+        <joint name="${prefix}workbench_joint" type="prismatic">
             <parent link="${prefix}workbench_base"/>
             <child link="${prefix}workbench_mount"/>
             <!-- Here we enter the joint position just defined before -->
             <origin xyz="0 -0.36 1.01" rpy="0 0 0"/> <!-- this y doesn't match actuall length, need to change later-->
             <!-- Here we define the axis along which the geometry is moved -->
-            <!-- <axis xyz="0 1 0"/> -->
+            <axis xyz="0 1 0"/>
             <!-- Here we define the joint's upper and lower limits -->
-            <!-- <limit effort="1000.0" lower="0" upper="0.71" velocity="0.05"/> -->
+            <limit effort="1000.0" lower="0" upper="0.71" velocity="0.1"/>
         </joint>
 
         <link name="${prefix}workbench_mount">

@@ -14,6 +14,8 @@ import numpy as np
 
 from pycontrol.robot import UR5eRobot
 from pycontrol.gripper import Robotiq85Gripper
+from pycontrol.conveyor import ConveyorBelt
+
 
 def open_gripper(gripper):
     success = gripper.open()
@@ -40,6 +42,8 @@ if __name__ == "__main__":
     robot = UR5eRobot()
     gripper = Robotiq85Gripper()
     # camera = AzureKinectCamera()\
+    conveyor = ConveyorBelt()
+
     angle = 1.571
     try:
         while True:
@@ -47,6 +51,7 @@ if __name__ == "__main__":
             pose_list.append([0.0, -angle, 0.0, -angle, angle, 0.0])
             robot.execute_joint_trajectory(pose_list)
             open_gripper(gripper)
+            conveyor.set_position(100)
 
             time.sleep(1)
 
@@ -54,6 +59,7 @@ if __name__ == "__main__":
             rot_list.append([0.0, -angle, 0.0, -angle, 0.0, 0.0])
             robot.execute_joint_trajectory(rot_list)
             close_gripper(gripper)
+            conveyor.go_home()
 
             time.sleep(1)
     except KeyboardInterrupt:
