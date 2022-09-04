@@ -23,7 +23,7 @@ rosdep update
 rosdep install --from-paths src --ignore-src -y
 
 # build the workspace
-catkin build -DPYTHON_EXECUTABLE=/usr/bin/python
+catkin build
 
 # activate the workspace (ie: source it)
 source devel/setup.bash
@@ -43,7 +43,7 @@ roslaunch robotiq_ft_sensor ft_sensor.launch
 
 roslaunch vention_conveyor_bringup vention_conveyor.launch 
 
-rviz -d  workbench/workbench_bringup/launch/combine.rviz
+rviz -d src/workbench/workbench_bringup/launch/combine.rviz
 
-rosrun pycontrol ros_demo.py
+rosrun pycontrol ros_cart.py
 ```

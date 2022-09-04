@@ -11,12 +11,17 @@ import sys
 import time
 import rospy
 import numpy as np
+import signal
 
 from pycontrol.gripper import Robotiq85Gripper
 from pycontrol.sensor import FT300Sensor
 from pycontrol.robot import UR5eRobot
 from pycontrol.conveyor import ConveyorBelt
 from pycontrol.camera import AzureKinectCamera
+
+def sig_handler(signal, frame):
+    print("Existing Program...")
+    sys.exit(0)
 
 def open_gripper(gripper):
     success = gripper.open()
@@ -42,7 +47,8 @@ def robot_pick(robot, camera, height, type):
     count = 0
     last_tx, last_ty, last_rot = 0, 0, 0
 
-    # only move when count > 6 (object stable for 3 seconds)
+    
+        # only move when count > 6 (object stable for 3 seconds)
     while count < 7:
         detection = camera.get_detect()
         if count == 0:
@@ -100,6 +106,7 @@ def robot_pick(robot, camera, height, type):
     picking_list.append([cp[0]+ last_tx, cp[1] + last_ty, height, cj_conv[3], cj_conv[4], cj_conv[5]])
     robot.execute_cartesian_trajectory(picking_list)
 
+
 def wait_movement(robot, conveyor, conveyor_pos):
     while True:
         if np.sum(np.abs(robot.get_pos_error())) < 0.01:
@@ -119,81 +126,85 @@ if __name__ == "__main__":
     conveyor = ConveyorBelt()
     camera = AzureKinectCamera()
 
+    signal.signal(signal.SIGINT, sig_handler)
+
     # send robot to home position
     robot.go_home()
 
     # opening gripper
     open_gripper(gripper)
 
-    # turn over to conveyor side
-    pose_list = []
-    pose_list.append([0.297, -0.132, 0.272, 2.226, -2.217, 0.0])
-    pose_list.append([-0.132, -0.297, 0.272, 0.0, -3.141, 0.0])
-    robot.execute_cartesian_trajectory(pose_list)
-
-    # send converyor to home position
-    conveyor.go_home()
-
-    over_list =[]
-    over_list.append([-0.132, -0.803, 0.478, 0.0, -3.141, 0.0])
-    robot.execute_cartesian_trajectory(over_list)
-
-    # block further movement until conveyor finished moving
-    wait_movement(robot, conveyor, 0)
-
-    robot_pick(robot, camera, 0.2, "unpacked")
-    
-    # close gripper
-    close_gripper(gripper)
-
-    retract_list = []
-    retract_list.append([-0.132, -0.78, 0.35, 0.0, -3.141, 0.0])
-    retract_list.append([-0.132, -0.297, 0.272, 0.0, -3.141, 0.0])
-    retract_list.append([0.297, -0.132, 0.272, 2.226, -2.217, 0.0])
-
-    robot.execute_cartesian_trajectory(retract_list)
-
-    conveyor.set_position(270)
-
-    handover_list = []
-    handover_list.append([0.586, -0.132, 0.233, 2.52, -2.51, 1.797])
-    robot.execute_cartesian_trajectory(handover_list)
-
-    # block sensor before conveyor and robot finished moving
-    wait_movement(robot, conveyor, 270)
-
-    sensor_reading = sensor.get_reading()
     while True:
-        new_reading = sensor.get_reading()
-        if abs(new_reading.Fx - sensor_reading.Fx) > 5 or abs(new_reading.Fy - sensor_reading.Fy) > 5 or abs(new_reading.Fz - sensor_reading.Fz) > 5:
-            # open gripper
-            open_gripper(gripper)
-            break
-        else:
-            pass
+        # turn over to conveyor side
+        pose_list = []
+        pose_list.append([0.297, -0.132, 0.272, 2.226, -2.217, 0.0])
+        pose_list.append([-0.132, -0.297, 0.272, 0.0, -3.141, 0.0])
+        robot.execute_cartesian_trajectory(pose_list)
 
-    observe_list = []
-    observe_list.append([0.586, -0.132, 0.233, 2.227, -2.217, 0.0])
-    observe_list.append([0.586, -0.132, 0.663, 2.227, -2.217, 0.0])
-    robot.execute_cartesian_trajectory(observe_list)
+        # send converyor to home position
+        conveyor.go_home()
 
-    robot_pick(robot, camera, 0.095, "packed")
+        over_list =[]
+        over_list.append([-0.132, -0.803, 0.478, 0.0, -3.141, 0.0])
+        robot.execute_cartesian_trajectory(over_list)
 
-    # close gripper
-    close_gripper(gripper)
+        # block further movement until conveyor finished moving
+        wait_movement(robot, conveyor, 0)
 
-    conveyor.set_position(540)
-    robot.go_home()
+        robot_pick(robot, camera, 0.2, "unpacked")
+        
+        # close gripper
+        close_gripper(gripper)
 
-    wait_movement(robot, conveyor, 540)
+        retract_list = []
+        retract_list.append([-0.132, -0.78, 0.35, 0.0, -3.141, 0.0])
+        retract_list.append([-0.132, -0.297, 0.272, 0.0, -3.141, 0.0])
+        retract_list.append([0.297, -0.132, 0.272, 2.226, -2.217, 0.0])
 
-    place_list= []
-    place_list.append([0.297, -0.132, 0.272, 2.217, -2.217, 0.0])
-    place_list.append([0.175, 0.273, 0.272, 3.14, -0.231, 0.0])
-    robot.execute_cartesian_trajectory(place_list)
+        robot.execute_cartesian_trajectory(retract_list)
 
-    # open gripper
-    open_gripper(gripper)
+        conveyor.set_position(270)
 
-    robot.go_home()
-    conveyor.set_position(100)
+        handover_list = []
+        handover_list.append([0.586, -0.132, 0.233, 2.52, -2.51, 1.797])
+        robot.execute_cartesian_trajectory(handover_list)
+
+        # block sensor before conveyor and robot finished moving
+        wait_movement(robot, conveyor, 270)
+
+        sensor_reading = sensor.get_reading()
+        while True:
+            new_reading = sensor.get_reading()
+            if abs(new_reading.Fx - sensor_reading.Fx) > 5 or abs(new_reading.Fy - sensor_reading.Fy) > 5 or abs(new_reading.Fz - sensor_reading.Fz) > 5:
+                # open gripper
+                open_gripper(gripper)
+                break
+            else:
+                pass
+
+        observe_list = []
+        observe_list.append([0.586, -0.132, 0.233, 2.227, -2.217, 0.0])
+        observe_list.append([0.586, -0.132, 0.663, 2.227, -2.217, 0.0])
+        robot.execute_cartesian_trajectory(observe_list)
+
+        robot_pick(robot, camera, 0.095, "packed")
+
+        # close gripper
+        close_gripper(gripper)
+
+        conveyor.set_position(540)
+        robot.go_home()
+
+        wait_movement(robot, conveyor, 540)
+
+        place_list= []
+        place_list.append([0.297, -0.132, 0.272, 2.217, -2.217, 0.0])
+        place_list.append([0.175, 0.273, 0.272, 3.14, -0.231, 0.0])
+        robot.execute_cartesian_trajectory(place_list)
+
+        # open gripper
+        open_gripper(gripper)
+
+        robot.go_home()
+        conveyor.set_position(100)
+        wait_movement(robot, conveyor, 100)
