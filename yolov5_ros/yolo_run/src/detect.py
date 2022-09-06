@@ -165,8 +165,9 @@ class Yolov5Detector:
                 blob_angle_deg = - blob_angle_deg
             elif 0 < blob_angle_deg and blob_angle_deg < 90:
                 blob_angle_deg = 90 - blob_angle_deg
-            elif blob_angle_deg == 0:
-                blob_angle_deg = -90
+            
+            if blob_angle_deg == 90 or blob_angle_deg == -90 and (rotrect_width > rotrect_height):
+                blob_angle_deg = 0
 
             blob_angle_rad = np.radians(blob_angle_deg)
             # print(blob_angle_rad, "rad")

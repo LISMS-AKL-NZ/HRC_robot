@@ -45,5 +45,5 @@ roslaunch vention_conveyor_bringup vention_conveyor.launch
 
 rviz -d src/workbench/workbench_bringup/launch/combine.rviz
 
-rosrun pycontrol ros_cart.py
+rosrun pycontrol ros_demo.py
 ```

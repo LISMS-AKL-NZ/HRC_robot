@@ -184,8 +184,8 @@ class UR5eRobot:
                     travel_dist = np.linalg.norm([self._actual_pose.position.x - pose[0],
                                                     self._actual_pose.position.y - pose[1],
                                                     self._actual_pose.position.z - pose[2]])
-                    if travel_dist < 0.125:
-                        travel_dist = 0.125
+                    if travel_dist < 0.1:
+                        travel_dist = 0.1
                         # if np.abs(self._actual_pose.position.tx - pose[3]) > 0.785 or \
                         #         np.abs(self._actual_pose.position.ty - pose[4]) > 0.785 or \
                         #         np.abs(self._actual_pose.position.tz - pose[5]) > 0.785:
@@ -208,7 +208,7 @@ class UR5eRobot:
 
                     point = CartesianTrajectoryPoint()
                     point.pose = self._convert_pose(pose)
-                    point.time_from_start = rospy.Duration(travel_dist/0.125)
+                    point.time_from_start = rospy.Duration(travel_dist/0.25)
                     goal.trajectory.points.append(point)
 
                     # rospy.loginfo("Executing trajectory using the {}".format(self.cartesian_trajectory_controller))

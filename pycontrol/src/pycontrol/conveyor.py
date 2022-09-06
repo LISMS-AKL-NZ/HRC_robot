@@ -19,7 +19,7 @@ class ConveyorBelt:
         self._cmd = ConveyorCmd()
         self._cmd.acceleration = 50.0
         self._cmd.speed = 50.0
-        self._cmd.desired_position = 250.0
+        self._cmd.desired_position = 0.0
         self._stat = ConveyorStat()
         self._r = rospy.Rate(1)
 
@@ -35,12 +35,13 @@ class ConveyorBelt:
     def set_speed(self, speed):
         self._cmd.speed = speed
         self._conveyor_pub.publish(self._cmd)
-        rospy.loginfo("Conveyor speed set to " + str(self._speed) + "mm/s.")
+        rospy.loginfo("Conveyor speed set to " + str(self._cmd.speed) + "mm/s.")
         self._r.sleep()
     
     def set_acceleration(self, acceleration):
         self._cmd.acceleration = acceleration
         self._conveyor_pub.publish(self._cmd)
+        rospy.loginfo("Conveyor acceleration set to " + str(self._cmd.acceleration) + "mm/s^2.")
         self._r.sleep()
 
     def set_position(self, position):
