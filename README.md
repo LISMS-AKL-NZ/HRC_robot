@@ -3,7 +3,7 @@
 ## dependencies
 ```bash
 
-pip install -r requirements # for whole robot
+pip install -r requirements.txt # for whole robot
 
 ```
 follow instructions in https://github.com/cambel/ur_ikfast # for ur_kinematics
@@ -12,10 +12,10 @@ follow instructions in https://github.com/cambel/ur_ikfast # for ur_kinematics
 ```bash
 
 # create a catkin workspace
-mkdir -p robot_ws/src && cd robot_ws
+mkdir -p robot_ws/src && cd robot_ws/src
 
-# clone the project
-git clone https://github.com/WanqingXia/HRC_robot.git .
+# clone the project noetic branch
+git clone -b ros-noetic https://github.com/WanqingXia/HRC_robot.git .
 
 # install dependencies
 sudo apt update -qq
