@@ -15,7 +15,7 @@ follow instructions in https://github.com/cambel/ur_ikfast # for ur_kinematics
 mkdir -p robot_ws/src && cd robot_ws
 
 # clone the project
-git clone https://github.com/WanqingXia/HRC_robot.git
+git clone https://github.com/WanqingXia/HRC_robot.git .
 
 # install dependencies
 sudo apt update -qq
