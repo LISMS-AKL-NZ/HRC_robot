@@ -16,6 +16,7 @@ Original from https://github.com/cambel/ur_ikfast
 ```
 sudo apt-get install libblas-dev liblapack-dev
 
+git clone https://github.com/cambel/ur_ikfast.git
 cd ur_ikfast # install ur_ikfast as python package
 pip install -e .
 ```
