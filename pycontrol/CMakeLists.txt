@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(pycontrol)
-
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
@@ -30,7 +29,7 @@ catkin_package(
 )
 catkin_package()
 
-catkin_install_python(PROGRAMS scripts/ros_cart.py scripts/ros_demo.py scripts/ros_joint.py scripts/robot_only.py
+catkin_install_python(PROGRAMS scripts/ros_cart.py scripts/ros_demo.py scripts/ros_joint.py scripts/robot_only.py scripts/media.py
   DESTINATION $(CATKIN_PACKAGE_BIN_DESTINATION)
 )
 

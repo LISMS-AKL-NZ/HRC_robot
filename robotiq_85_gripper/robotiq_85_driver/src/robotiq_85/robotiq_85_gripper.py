@@ -39,9 +39,7 @@ class Robotiq85Gripper:
     def process_stat_cmd(self,dev=0):
         try:
             self.ser.write(self._gripper[dev].stat_cmd_bytes)
-            # print(self._gripper[dev].stat_cmd_bytes)
             rsp = self.ser.read(21)
-            # print(rsp)
             if (len(rsp) != 21):
                 return False
             return self._gripper[dev].parse_rsp(rsp)
