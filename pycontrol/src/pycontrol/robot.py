@@ -96,7 +96,7 @@ class UR5eRobot:
         self._joint_pose = JointTrajectoryPoint().positions
         self.ur5e_arm = ur_kinematics.URKinematics('ur5e')
 
-        self.home_pos = [[0.297, -0.132, 0.148, 2.226, -2.217, 0.0]]
+        self.home_pos = [[0.297, -0.132, 0.147, 2.231, -2.216, 0.0]]
         # self.go_home()
         
     def go_home(self):

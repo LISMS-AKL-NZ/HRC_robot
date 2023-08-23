@@ -151,7 +151,7 @@ class Yolov5Detector:
             # get rotated rectangle from outer contour
             # rotrect = cv2.minAreaRect(cntrs[savedContour])
             box = cv2.boxPoints(rotrect)
-            box = np.int0(box)
+            box = np.intp(box)
 
             # draw rotated rectangle on copy of img as result
             result = img.copy()
@@ -183,7 +183,7 @@ class Yolov5Detector:
 
             det = self.detect()
             det = det.cpu().detach().numpy()
-            num_unpacked = np.int0(np.sum(det[:, 5]))
+            num_unpacked = np.intp(np.sum(det[:, 5]))
             num_packed = det.shape[0] - num_unpacked
             dist_packed, dist_unpacked = 100000, 100000
             saved_packed, saved_unpacked = [], []

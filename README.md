@@ -4,7 +4,7 @@ Follow the instruction step by step to build the project, system requirement: Ub
 ## Clone the project
 ```bash
 # create a catkin workspace
-mkdir -p robot_ws/src && cd robot_ws/src
+mkdir -p HRC_robot/src && cd HRC_robot/src
 
 # clone the project noetic branch
 git clone -b ros-noetic https://github.com/WanqingXia/HRC_robot.git .
@@ -13,58 +13,69 @@ git clone -b ros-noetic https://github.com/WanqingXia/HRC_robot.git .
 ## Dependencies
 ### For ur_ikfast package
 Original from https://github.com/cambel/ur_ikfast
-```
+
+```bash
 sudo apt-get install libblas-dev liblapack-dev
 
 git clone https://github.com/cambel/ur_ikfast.git
-cd ur_ikfast # install ur_ikfast as python package
+cd ur_ikfast
 pip install -e .
 ```
 
 ### For using Azure Kinect Sensor SDK
 Original from https://gist.github.com/madelinegannon/c212dbf24fc42c1f36776342754d81bc
-1. Add source using curl
+
+1.Add source using curl
+
 ```bash
 sudo apt install curl
 curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 sudo apt-add-repository https://packages.microsoft.com/ubuntu/18.04/prod
 ```
-2. Modify `/etc/apt/sources.list`. At the bottom of the file, change from:
-```
+
+2.Modify `/etc/apt/sources.list`. At the bottom of the file, change from:
+
+```bash
 deb https://packages.microsoft.com/ubuntu/18.04/prod bionic main
 # deb-src https://packages.microsoft.com/ubuntu/18.04/prod bionic main
 ```
- to:
-```
+
+to:
+
+```bash
 deb [arch=amd64] https://packages.microsoft.com/ubuntu/18.04/prod bionic main
 # deb-src [arch=amd64] https://packages.microsoft.com/ubuntu/18.04/prod bionic main
 ```
 
-3. Rerun `sudo apt-get update`
+3.Rerun `sudo apt-get update`
 
-4. Install Kinect Packages
+4.Install Kinect Packages
 
-```
+```bash
 sudo apt install k4a-tools
 sudo apt install libk4a1.4-dev
 ```
 
-5. Finish Device Setup
+5.Finish Device Setup
 
 [Finish device setup](https://github.com/microsoft/Azure-Kinect-Sensor-SDK/blob/develop/docs/usage.md#linux-device-setup) by setting up udev rules:
 
 - Copy '[scripts/99-k4a.rules](https://github.com/microsoft/Azure-Kinect-Sensor-SDK/blob/develop/scripts/99-k4a.rules)' into '/etc/udev/rules.d/'.
+
+```bash
+sudo cp ~/HRC_robot/src/Azure_Kinect_ROS_Driver/99-k4a.rules /etc/udev/rules.d/99-k4a.rules
+```
 - Detach and reattach Azure Kinect devices if attached during this process.
 
-6. Verify installation by call it directly in the terminal:
-```
+
+6.Verify installation by call it directly in the terminal:
+```bash
 k4aviewer
 ```
 
 ### For Python packages
 ```bash
-pip install -r requirements.txt # install all python packages
-```
+pip install -r requirements.txt
 
 ### For ROS packages
 
@@ -72,7 +83,7 @@ pip install -r requirements.txt # install all python packages
 # install dependencies
 sudo apt update -qq
 rosdep update
-cd /robot_ws
+cd /HRC_robot
 rosdep install --from-paths src/Universal_Robots_ROS_Driver/ --ignore-src -y
 rosdep install --from-paths src/fmauch_universal_robot/ --ignore-src -y
 rosdep install --from-paths src/robotiq_85_gripper/ --ignore-src -y
@@ -84,7 +95,7 @@ rosdep install --from-paths src/robotiq_85_gripper/ --ignore-src -y
 catkin build 
 
 # activate the workspace (ie: source it)
-echo 'source $HOME/$USER/robot_ws/devel/setup.bash' >> ~/.bashrc 
+echo 'source $HOME/HRC_robot/devel/setup.bash' >> ~/.bashrc 
 source ~/.bashrc
 ```
 
@@ -108,22 +119,25 @@ rosrun pycontrol ros_demo.py
 ```
 
 ## Trouble shooting
-1. Having trouble with communicate with robot
-```
+1.Having trouble with communicate with robot
+
+```bash
 # disable firewall to communicate with robot
 sudo ufw disable
 ```
 
-2. Having trouble with controlling the gripper
-```
+2.Having trouble with controlling the gripper
+
+```bash
 # change permission for /tmp/ttyUR
 sudo chmod -t /tmp
 sudo chmod 777 /tmp/ttyUR
 sudo chmod +t /tmp
 ```
 
-3. Having trouble with controlling the Force/Torque sensor
-```
+3.Having trouble with controlling the Force/Torque sensor
+
+```bash
 # change permission for /dev/ttyUSB0
 sudo chmod 777 /dev/ttyUSB0
 ```

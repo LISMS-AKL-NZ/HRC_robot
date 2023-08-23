@@ -148,13 +148,13 @@ if __name__ == "__main__":
         conveyor.go_home()
 
         over_list =[]
-        over_list.append([-0.132, -0.803, 0.478, 0.0, -3.141, 0.0])
+        over_list.append([-0.191, -0.668, 0.250, 0.0, -3.141, 0.0])
         robot.execute_cartesian_trajectory(over_list)
 
         # block further movement until conveyor finished moving
         wait_movement(robot, conveyor, 0)
 
-        robot_pick(robot, camera, 0.2, "unpacked")
+        robot_pick(robot, camera, 0.08, "unpacked")
         
         # close gripper
         close_gripper(gripper)
@@ -182,7 +182,7 @@ if __name__ == "__main__":
         wait_movement(robot, conveyor, 270)
         
 
-        robot_pick(robot, camera, 0.095, "packed")
+        robot_pick(robot, camera, 0.13, "packed")
 
         # close gripper
         close_gripper(gripper)
