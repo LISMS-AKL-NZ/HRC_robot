@@ -167,7 +167,7 @@ if __name__ == "__main__":
         robot.execute_cartesian_trajectory(retract_list)
 
         handover_list = []
-        handover_list.append([0.349, -0.045, 0.184, 3.141, 0.037, 0.0])
+        handover_list.append([0.349, -0.045, 0.240, 3.141, 0.037, 0.0])
         robot.execute_cartesian_trajectory(handover_list)
 
         wait_movement(robot, conveyor, 0)
@@ -189,7 +189,7 @@ if __name__ == "__main__":
 
         place_list= []
         place_list.append([0.297, -0.132, 0.348, 2.226, -2.217, 0.0])
-        place_list.append([0.079, 0.656, 0.193, 2.176, -2.267, 0.0])
+        place_list.append([0.077, 0.656, 0.200, 2.176, -2.267, 0.0])
         robot.execute_cartesian_trajectory(place_list)
 
         # open gripper

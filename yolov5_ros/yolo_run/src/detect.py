@@ -207,14 +207,13 @@ class Yolov5Detector:
             
 
             if len(saved_packed):
-                s = saved_packed
-                s = np.asarray(s, dtype=np.int32)
-                x_center = (0.5 * (s[2] - s[0]) + s[0])
-                y_center = (0.5 * (s[3] - s[1]) + s[1])
+                bbox = np.asarray(saved_packed, dtype=np.int32)
+                x_center = (0.5 * (bbox[2] - bbox[0]) + bbox[0])
+                y_center = (0.5 * (bbox[3] - bbox[1]) + bbox[1])
                 tx = -((y_center - 360) * (760 / 720)) + 80  # calculate x displacement for workbench
                 ty = -((x_center - 640) * (1330 / 1280)) - 40  # calculate y displacement for workbench
 
-                cropped = self.img_color[s[1]:s[3], s[0]:s[2], :]
+                cropped = self.img_color[bbox[1]:bbox[3], bbox[0]:bbox[2], :]
                 rot_rad = self.rot(cropped , 0)
                 self.pred.packed_tx = tx
                 self.pred.packed_ty = ty
@@ -225,14 +224,15 @@ class Yolov5Detector:
                 self.pred.packed_rot = -100
 
             if len(saved_unpacked):
-                s = saved_unpacked
-                s = np.asarray(s, dtype=np.int32)
-                x_center = (0.5 * (s[2] - s[0]) + s[0])
-                y_center = (0.5 * (s[3] - s[1]) + s[1])
-                tx = -((x_center - 640) * (780 / 1280)) - 40  # calculate x displacement for conveyor
-                ty = ((y_center - 360) * (440 / 720)) - 80  # calculate y displacement for conveyor
+                bbox = np.asarray(saved_unpacked, dtype=np.int32)
+                x_center = (0.5 * (bbox[2] - bbox[0]) + bbox[0])
+                y_center = (0.5 * (bbox[3] - bbox[1]) + bbox[1])
 
-                cropped = self.img_color[s[1]:s[3], s[0]:s[2], :]
+                # need to change the calibration if the height of camera or conveyor changes
+                tx = -((x_center - 640) * (540 / 1280)) -40# calculate x displacement for conveyor
+                ty = ((y_center - 360) * (310 / 720)) - 80  # calculate y displacement for conveyor
+
+                cropped = self.img_color[bbox[1]:bbox[3], bbox[0]:bbox[2], :]
                 rot_rad = self.rot(cropped, 1)
                 self.pred.unpacked_tx = tx
                 self.pred.unpacked_ty = ty
