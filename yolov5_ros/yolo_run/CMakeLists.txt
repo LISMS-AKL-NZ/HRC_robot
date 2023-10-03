@@ -27,6 +27,6 @@ include_directories(
 )
 
 ## Install ## 
-install(DIRECTORY launch
+install(DIRECTORY launch src
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )

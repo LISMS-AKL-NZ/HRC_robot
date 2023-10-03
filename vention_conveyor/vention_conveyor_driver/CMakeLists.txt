@@ -27,3 +27,7 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
 )
+## Install ## 
+install(DIRECTORY src bin
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)

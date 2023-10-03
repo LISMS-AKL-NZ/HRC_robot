@@ -145,3 +145,30 @@ sudo chmod +t /tmp
 # change permission for /dev/ttyUSB0
 sudo chmod 777 /dev/ttyUSB0
 ```
+
+## Installing
+1.Config installation space
+
+```bash
+catkin config --install-space /opt/my_workspace
+```
+
+2.Normally build
+
+```bash
+catkin build
+```
+
+3.Activate the workspace (ie: source it)
+
+```bash
+echo 'source $HOME/HRC_robot/install/setup.bash' >> ~/.bashrc 
+source ~/.bashrc
+```
+4.Make files executable
+
+```bash
+cd HRC_robot/install
+sudo chmod -R 777 share/
+```
+

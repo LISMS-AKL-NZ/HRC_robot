@@ -44,4 +44,8 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+## Install ## 
+install(DIRECTORY scripts src
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 

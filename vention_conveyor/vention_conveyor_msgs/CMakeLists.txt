@@ -29,3 +29,7 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
 )
+## Install ## 
+install(DIRECTORY msg
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
