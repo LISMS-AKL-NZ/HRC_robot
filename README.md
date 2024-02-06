@@ -11,7 +11,7 @@ Follow the instruction step by step to build the project, system requirement: Ub
 mkdir -p HRC_robot/src && cd HRC_robot/src
 
 # clone the project noetic branch
-git clone -b ros-noetic https://github.com/WanqingXia/HRC_robot.git .
+git clone https://github.com/WanqingXia/HRC_robot.git .
 ```
 
 ## Dependencies
