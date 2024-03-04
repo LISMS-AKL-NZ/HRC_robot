@@ -1,7 +1,6 @@
 # ROS Control
 This project is used to control the UR5e + Linear rail in The University of Auckland LISMS lab.
-[![Watch the video](https://i.ytimg.com/vi/jRkZnCB4gQY/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG\u0026rs=AOn4CLCIVHzI2joXagMyoSAsi5VaQPvKXQM})](https://www.youtube.com/watch?v=jRkZnCB4gQY)
-[![Watch the video](https://i.ytimg.com/vi/pbCE18NOex4/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG\u0026rs=AOn4CLA3StGiesuo6oPrFYnc_J2U4JkgIA)](https://www.youtube.com/watch?v=pbCE18NOex4)
+[![Watch the video](https://i.ytimg.com/vi/O54NXTF1nhs/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgYShXMA8=&rs=AOn4CLD-y80i6C_E7O8E1oOmRDOmnVWYMA)](https://www.youtube.com/watch?v=O54NXTF1nhs)
 
 Follow the instruction step by step to build the project, system requirement: Ubuntu 20.04
 
