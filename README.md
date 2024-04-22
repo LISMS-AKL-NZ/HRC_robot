@@ -170,4 +170,6 @@ source ~/.bashrc
 cd HRC_robot/install
 sudo chmod -R 777 share/
 ```
+## Contact
+If you have any questions about this repository, please contact Wanqing Xia via email <wxia612@aucklanduni.ac.nz>
 
